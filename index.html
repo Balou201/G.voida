@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Puissance 4 en ligne</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      text-align: center;
+    }
+    table {
+      margin: auto;
+      border-spacing: 5px;
+    }
+    td {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+    }
+    .red { background: red; }
+    .yellow { background: gold; }
+  </style>
+</head>
+<body>
+  <h1>🔴 Puissance 4 🟡</h1>
+  <p id="status">Connexion en cours...</p>
+  <table id="grid"></table>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script>
+    // 🔧 Configuration Firebase (à remplacer par tes infos)
+    const firebaseConfig = {
+      apiKey: "TA_CLE_API",
+      authDomain: "TON_PROJET.firebaseapp.com",
+      databaseURL: "https://TON_PROJET.firebaseio.com",
+      projectId: "TON_PROJET",
+      storageBucket: "TON_PROJET.appspot.com",
+      messagingSenderId: "XXX",
+      appId: "XXX"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // 🎮 Initialisation
+    const ROWS = 6, COLS = 7;
+    let playerId = Math.random().toString(36).slice(2);
+    let playerColor = null;
+    let gameId = null;
+    let isMyTurn = false;
+
+    const grid = document.getElementById("grid");
+    const status = document.getElementById("status");
+
+    // Création de la grille HTML
+    for (let r = 0; r < ROWS; r++) {
+      const row = grid.insertRow();
+      for (let c = 0; c < COLS; c++) {
+        const cell = row.insertCell();
+        cell.dataset.row = r;
+        cell.dataset.col = c;
+        cell.onclick = () => {
+          if (isMyTurn) makeMove(c);
+        };
+      }
+    }
+
+    // 🎲 Matchmaking
+    function findOrCreateGame() {
+      const queueRef = db.ref("queue");
+      queueRef.once("value", snap => {
+        const queue = snap.val() || {};
+        const waiting = Object.keys(queue).find(k => k !== playerId);
+
+        if (waiting) {
+          // Joindre une partie existante
+          gameId = "game_" + waiting;
+          db.ref("queue/" + waiting).remove();
+          startGame(gameId, "yellow");
+        } else {
+          // Attente d’un adversaire
+          db.ref("queue/" + playerId).set(true);
+          db.ref("queue/" + playerId).onDisconnect().remove();
+        }
+      });
+    }
+
+    function startGame(id, color) {
+      gameId = id;
+      playerColor = color;
+      isMyTurn = (color === "red");
+      status.textContent = `🎮 Partie trouvée. Tu es ${playerColor.toUpperCase()} !`;
+
+      const movesRef = db.ref("games/" + gameId + "/moves");
+      movesRef.on("child_added", snap => {
+        const move = snap.val();
+        placeDisc(move.col, move.color);
+        isMyTurn = (move.color !== playerColor);
+      });
+    }
+
+    function makeMove(col) {
+      if (!isMyTurn) return;
+      db.ref("games/" + gameId + "/moves").push({
+        col,
+        color: playerColor
+      });
+      isMyTurn = false;
+    }
+
+    function placeDisc(col, color) {
+      for (let r = ROWS - 1; r >= 0; r--) {
+        const cell = grid.rows[r].cells[col];
+        if (!cell.classList.contains("red") && !cell.classList.contains("yellow")) {
+          cell.classList.add(color);
+          break;
+        }
+      }
+    }
+
+    findOrCreateGame();
+  </script>
+</body>
+</html>
