@@ -1,243 +1,104 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mon Site Perso</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>𝓖∘𝕧𝕠𝕚𝖉𝖆 - Site Officiel</title>
   <style>
-    /* RESET */
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
-      color: #eee;
-      line-height: 1.6;
-      min-height: 100vh;
-      scroll-behavior: smooth;
-    }
-    header {
-      background: #1db954;
-      padding: 20px;
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: 700;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #7a00cc, #00ff88);
       color: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    nav {
-      background: #222;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 15px 0;
-      box-shadow: inset 0 -2px 0 #1db954;
-      position: sticky;
-      top: 72px; /* height header */
-      z-index: 90;
+      flex-direction: column;
+      align-items: center;
     }
-    nav a {
-      color: #eee;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: color 0.3s ease;
-      cursor: pointer;
-    }
-    nav a:hover,
-    nav a.active {
-      color: #1db954;
-    }
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 15px;
-    }
-    section {
-      margin-bottom: 60px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #333;
-    }
-    h2 {
-      color: #1db954;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #1db954;
-      padding-bottom: 8px;
-      font-weight: 700;
-    }
-    img.avatar {
-      border-radius: 50%;
-      max-width: 180px;
-      margin-bottom: 20px;
-      border: 4px solid #1db954;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 12px;
+
+    header {
       text-align: center;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      padding: 50px 20px 20px;
     }
-    .videos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 20px;
-      justify-items: center;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 5px #000;
     }
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-      width: 100%;
-      max-width: 320px;
+
+    p {
+      font-size: 1.2rem;
     }
-    .video-wrapper iframe {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border: 0;
+
+    .slogan {
+      margin: 20px 0;
+      font-style: italic;
+      font-size: 1.4rem;
     }
-    .server-box {
-      background: #222;
+
+    .section {
+      background-color: rgba(0,0,0,0.2);
+      margin: 20px;
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 3px 15px rgba(0,255,100,0.3);
-      text-align: center;
-      max-width: 400px;
-      margin: 0 auto;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 15px #00000066;
     }
-    .server-box a {
-      color: #1db954;
-      font-weight: 700;
-      font-size: 1.2rem;
+
+    a {
+      color: #00ffcc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
       text-decoration: underline;
     }
-    .server-box a:hover {
-      color: #76f2a4;
-    }
+
     footer {
-      background: #111;
-      color: #666;
+      margin-top: auto;
+      padding: 20px;
       text-align: center;
-      padding: 15px 10px;
       font-size: 0.9rem;
-      border-top: 1px solid #333;
-    }
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        gap: 10px;
-        position: static;
-      }
+      color: #ccc;
     }
   </style>
 </head>
 <body>
 
-<header>Mon Site Perso</header>
+  <header>
+    <h1>𝓖∘𝕧𝕠𝕚𝖉𝖆</h1>
+    <p>Je suis développeur, ingénieur (pas de diplôme pour tout) et souvent occupé.</p>
+    <div class="slogan">« On a jamais rien sans rien »</div>
+  </header>
 
-<nav>
-  <a href="#accueil" class="active">Accueil</a>
-  <a href="#bio">Biographie</a>
-  <a href="#videos">Vidéos</a>
-  <a href="#serveur">Serveur Minecraft</a>
-</nav>
+  <div class="section">
+    <h2>🧠 Test de Maturité</h2>
+    <p>Découvre où tu en es ! <br>
+    👉 <a href="https://balou201.github.io/Maturite_Test/" target="_blank">Accéder au test</a></p>
+  </div>
 
-<main>
-  <section id="accueil" aria-label="Accueil">
-    <img src="https://i.pravatar.cc/180" alt="Avatar perso" class="avatar" />
-    <h2>Bienvenue sur mon site personnel</h2>
-    <p>Salut ! Je suis [Ton Nom/Pseudo], passionné de Minecraft et créateur de contenu.</p>
-    <p>Ce site présente ma biographie, mes vidéos favorites et mon serveur Minecraft.</p>
-  </section>
+  <div class="section">
+    <h2>🚧 Projets à venir</h2>
+    <ul>
+      <li>Site 1 – En cours...</li>
+      <li>Site 2 – Bientôt disponible</li>
+      <li>Site 3 – À l’étude</li>
+    </ul>
+  </div>
 
-  <section id="bio" aria-label="Biographie">
-    <h2>Biographie</h2>
-    <p>Je suis un créateur français, actif dans la communauté Minecraft depuis plusieurs années.</p>
-    <p>J'aime partager mes aventures, astuces et projets avec ma communauté.</p>
-  </section>
+  <div class="section">
+    <h2>📬 Contact</h2>
+    <p>Discord : <a href="https://discord.gg/ye8MhVUdWU" target="_blank">Rejoins mon serveur</a></p>
+    <p>Snapchat : <strong>g.voida</strong></p>
+  </div>
 
-  <section id="videos" aria-label="Vidéos">
-    <h2>Mes vidéos préférées</h2>
-    <div class="videos">
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/1vXwlNN6L7Y"
-          title="Vidéo 1"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
-      </div>
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/6VoFkPgZr_Y"
-          title="Vidéo 2"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
-      </div>
-      <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/y-0Z13P5bt8"
-          title="Vidéo 3"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
-      </div>
-    </div>
-  </section>
-
-  <section id="serveur" aria-label="Serveur Minecraft">
-    <h2>Mon serveur Minecraft</h2>
-    <div class="server-box">
-      <p>Rejoins mon serveur Minecraft pour des aventures incroyables !</p>
-      <p><strong>Adresse IP :</strong> <code>play.monserveur.fr</code></p>
-      <p>
-        Site officiel : <a href="https://monserveur.fr" target="_blank" rel="noopener noreferrer">https://monserveur.fr</a>
-      </p>
-    </div>
-  </section>
-</main>
-
-<footer>
-  &copy; 2025 Mon Site Perso - Créé avec ChatGPT
-</footer>
-
-<script>
-  // Gérer la classe active sur la nav selon le scroll
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('nav a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 100;
-      if (pageYOffset >= sectionTop) {
-        current = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) {
-        link.classList.add('active');
-      }
-    });
-  });
-</script>
+  <footer>
+    © 𝓖∘𝕧𝕠𝕚𝖉𝖆 — Tous droits réservés
+  </footer>
 
 </body>
 </html>
