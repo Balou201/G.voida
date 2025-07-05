@@ -3,25 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fuze III - Fan Site</title>
+  <title>Mon Site Perso</title>
   <style>
-    /* Reset simple */
+    /* RESET */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #121212;
       color: #eee;
       line-height: 1.6;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      scroll-behavior: smooth;
     }
-
     header {
       background: #1db954;
       padding: 20px;
@@ -30,8 +27,10 @@
       font-weight: 700;
       color: #fff;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-
     nav {
       background: #222;
       display: flex;
@@ -40,32 +39,31 @@
       padding: 15px 0;
       box-shadow: inset 0 -2px 0 #1db954;
       position: sticky;
-      top: 0;
-      z-index: 100;
+      top: 72px; /* height header */
+      z-index: 90;
     }
-
     nav a {
       color: #eee;
       text-decoration: none;
       font-weight: 600;
       font-size: 1.1rem;
       transition: color 0.3s ease;
+      cursor: pointer;
     }
-    nav a:hover {
+    nav a:hover,
+    nav a.active {
       color: #1db954;
     }
-
     main {
-      flex-grow: 1;
       max-width: 900px;
       margin: 40px auto;
       padding: 0 15px;
     }
-
     section {
       margin-bottom: 60px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #333;
     }
-
     h2 {
       color: #1db954;
       margin-bottom: 15px;
@@ -73,26 +71,29 @@
       padding-bottom: 8px;
       font-weight: 700;
     }
-
     img.avatar {
       border-radius: 50%;
       max-width: 180px;
       margin-bottom: 20px;
       border: 4px solid #1db954;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
-
     p {
       font-size: 1.1rem;
       margin-bottom: 12px;
+      text-align: center;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-
-    /* Vidéos YouTube intégrées */
     .videos {
       display: grid;
       grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
       gap: 20px;
+      justify-items: center;
     }
-
     .video-wrapper {
       position: relative;
       padding-bottom: 56.25%;
@@ -100,6 +101,8 @@
       overflow: hidden;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      width: 100%;
+      max-width: 320px;
     }
     .video-wrapper iframe {
       position: absolute;
@@ -107,14 +110,14 @@
       height: 100%;
       border: 0;
     }
-
-    /* Serveur Minecraft */
     .server-box {
       background: #222;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 3px 15px rgba(0,255,100,0.3);
       text-align: center;
+      max-width: 400px;
+      margin: 0 auto;
     }
     .server-box a {
       color: #1db954;
@@ -125,7 +128,6 @@
     .server-box a:hover {
       color: #76f2a4;
     }
-
     footer {
       background: #111;
       color: #666;
@@ -134,110 +136,108 @@
       font-size: 0.9rem;
       border-top: 1px solid #333;
     }
-
-    /* Responsive */
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
         gap: 10px;
+        position: static;
       }
     }
   </style>
 </head>
 <body>
 
-  <header>Fuze III - Fan Site</header>
+<header>Mon Site Perso</header>
 
-  <nav>
-    <a href="#accueil">Accueil</a>
-    <a href="#bio">Biographie</a>
-    <a href="#videos">Vidéos</a>
-    <a href="#serveur">Serveur Minecraft</a>
-  </nav>
+<nav>
+  <a href="#accueil" class="active">Accueil</a>
+  <a href="#bio">Biographie</a>
+  <a href="#videos">Vidéos</a>
+  <a href="#serveur">Serveur Minecraft</a>
+</nav>
 
-  <main>
-    <section id="accueil" aria-label="Accueil">
-      <img
-        src="https://yt3.googleusercontent.com/ytc/AIdro_lIcXXXXX=s900-c-k-c0x00ffffff-no-rj"
-        alt="Portrait de Fuze III"
-        class="avatar"
-        width="180"
-        height="180"
-        loading="lazy"
-      />
-      <h2>Bienvenue dans l'univers de Fuze III</h2>
-      <p>
-        Fuze III est un célèbre YouTuber et créateur de contenu français spécialisé dans Minecraft.
-        Reconnu pour son humour, ses vidéos créatives et son implication dans la communauté,
-        il est notamment connu pour son serveur Minecraft FuzeMC.
-      </p>
-      <p>
-        Sur ce site, découvre sa biographie, ses vidéos populaires et tout ce qui fait de lui un acteur incontournable de Minecraft francophone.
-      </p>
-    </section>
+<main>
+  <section id="accueil" aria-label="Accueil">
+    <img src="https://i.pravatar.cc/180" alt="Avatar perso" class="avatar" />
+    <h2>Bienvenue sur mon site personnel</h2>
+    <p>Salut ! Je suis [Ton Nom/Pseudo], passionné de Minecraft et créateur de contenu.</p>
+    <p>Ce site présente ma biographie, mes vidéos favorites et mon serveur Minecraft.</p>
+  </section>
 
-    <section id="bio" aria-label="Biographie">
-      <h2>Biographie</h2>
-      <p>
-        Fuze III a commencé sa chaîne YouTube il y a plusieurs années, et s’est rapidement imposé
-        comme une figure majeure de la scène Minecraft en France. Sa créativité et son sens de
-        l’humour lui ont permis de rassembler une communauté fidèle.
-      </p>
-      <p>
-        Membre actif du serveur Holycube et créateur du serveur FuzeMC, il continue d’innover
-        et d’inspirer de nombreux joueurs.
-      </p>
-    </section>
+  <section id="bio" aria-label="Biographie">
+    <h2>Biographie</h2>
+    <p>Je suis un créateur français, actif dans la communauté Minecraft depuis plusieurs années.</p>
+    <p>J'aime partager mes aventures, astuces et projets avec ma communauté.</p>
+  </section>
 
-    <section id="videos" aria-label="Vidéos populaires">
-      <h2>Vidéos populaires</h2>
-      <div class="videos">
-        <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/1vXwlNN6L7Y"
-            title="Fuze III - Vidéo populaire 1"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
-        </div>
-        <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/6VoFkPgZr_Y"
-            title="Fuze III - Vidéo populaire 2"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
-        </div>
-        <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/y-0Z13P5bt8"
-            title="Fuze III - Vidéo populaire 3"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
-        </div>
+  <section id="videos" aria-label="Vidéos">
+    <h2>Mes vidéos préférées</h2>
+    <div class="videos">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/1vXwlNN6L7Y"
+          title="Vidéo 1"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
       </div>
-    </section>
-
-    <section id="serveur" aria-label="Serveur Minecraft">
-      <h2>Serveur Minecraft officiel</h2>
-      <div class="server-box">
-        <p>Le serveur Minecraft officiel de Fuze III : <strong>FuzeMC</strong></p>
-        <p>
-          Adresse IP : <code>play.fuzemc.fr</code>
-        </p>
-        <p>
-          Site officiel : <a href="https://fuzemc.fr" target="_blank" rel="noopener noreferrer">https://fuzemc.fr</a>
-        </p>
-        <p>
-          Rejoins la communauté et découvre un univers Minecraft unique !
-        </p>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/6VoFkPgZr_Y"
+          title="Vidéo 2"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
       </div>
-    </section>
-  </main>
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/y-0Z13P5bt8"
+          title="Vidéo 3"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    &copy; 2025 Fan Site Fuze III - Créé par toi avec ChatGPT
-  </footer>
+  <section id="serveur" aria-label="Serveur Minecraft">
+    <h2>Mon serveur Minecraft</h2>
+    <div class="server-box">
+      <p>Rejoins mon serveur Minecraft pour des aventures incroyables !</p>
+      <p><strong>Adresse IP :</strong> <code>play.monserveur.fr</code></p>
+      <p>
+        Site officiel : <a href="https://monserveur.fr" target="_blank" rel="noopener noreferrer">https://monserveur.fr</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 Mon Site Perso - Créé avec ChatGPT
+</footer>
+
+<script>
+  // Gérer la classe active sur la nav selon le scroll
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (pageYOffset >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
