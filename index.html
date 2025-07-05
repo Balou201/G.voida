@@ -1,130 +1,243 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Puissance 4 en ligne</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fuze III - Fan Site</title>
   <style>
+    /* Reset simple */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #eee;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #1db954;
+      padding: 20px;
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    nav {
+      background: #222;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px 0;
+      box-shadow: inset 0 -2px 0 #1db954;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: #eee;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #1db954;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 15px;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    h2 {
+      color: #1db954;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #1db954;
+      padding-bottom: 8px;
+      font-weight: 700;
+    }
+
+    img.avatar {
+      border-radius: 50%;
+      max-width: 180px;
+      margin-bottom: 20px;
+      border: 4px solid #1db954;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    /* Vidéos YouTube intégrées */
+    .videos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 20px;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Serveur Minecraft */
+    .server-box {
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px rgba(0,255,100,0.3);
       text-align: center;
     }
-    table {
-      margin: auto;
-      border-spacing: 5px;
+    .server-box a {
+      color: #1db954;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: underline;
     }
-    td {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: #ccc;
-      cursor: pointer;
+    .server-box a:hover {
+      color: #76f2a4;
     }
-    .red { background: red; }
-    .yellow { background: gold; }
+
+    footer {
+      background: #111;
+      color: #666;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      border-top: 1px solid #333;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>🔴 Puissance 4 🟡</h1>
-  <p id="status">Connexion en cours...</p>
-  <table id="grid"></table>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <header>Fuze III - Fan Site</header>
 
-  <script>
-    // 🔧 Configuration Firebase (à remplacer par tes infos)
-    const firebaseConfig = {
-      apiKey: "TA_CLE_API",
-      authDomain: "TON_PROJET.firebaseapp.com",
-      databaseURL: "https://TON_PROJET.firebaseio.com",
-      projectId: "TON_PROJET",
-      storageBucket: "TON_PROJET.appspot.com",
-      messagingSenderId: "XXX",
-      appId: "XXX"
-    };
+  <nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#bio">Biographie</a>
+    <a href="#videos">Vidéos</a>
+    <a href="#serveur">Serveur Minecraft</a>
+  </nav>
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+  <main>
+    <section id="accueil" aria-label="Accueil">
+      <img
+        src="https://yt3.googleusercontent.com/ytc/AIdro_lIcXXXXX=s900-c-k-c0x00ffffff-no-rj"
+        alt="Portrait de Fuze III"
+        class="avatar"
+        width="180"
+        height="180"
+        loading="lazy"
+      />
+      <h2>Bienvenue dans l'univers de Fuze III</h2>
+      <p>
+        Fuze III est un célèbre YouTuber et créateur de contenu français spécialisé dans Minecraft.
+        Reconnu pour son humour, ses vidéos créatives et son implication dans la communauté,
+        il est notamment connu pour son serveur Minecraft FuzeMC.
+      </p>
+      <p>
+        Sur ce site, découvre sa biographie, ses vidéos populaires et tout ce qui fait de lui un acteur incontournable de Minecraft francophone.
+      </p>
+    </section>
 
-    // 🎮 Initialisation
-    const ROWS = 6, COLS = 7;
-    let playerId = Math.random().toString(36).slice(2);
-    let playerColor = null;
-    let gameId = null;
-    let isMyTurn = false;
+    <section id="bio" aria-label="Biographie">
+      <h2>Biographie</h2>
+      <p>
+        Fuze III a commencé sa chaîne YouTube il y a plusieurs années, et s’est rapidement imposé
+        comme une figure majeure de la scène Minecraft en France. Sa créativité et son sens de
+        l’humour lui ont permis de rassembler une communauté fidèle.
+      </p>
+      <p>
+        Membre actif du serveur Holycube et créateur du serveur FuzeMC, il continue d’innover
+        et d’inspirer de nombreux joueurs.
+      </p>
+    </section>
 
-    const grid = document.getElementById("grid");
-    const status = document.getElementById("status");
+    <section id="videos" aria-label="Vidéos populaires">
+      <h2>Vidéos populaires</h2>
+      <div class="videos">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/1vXwlNN6L7Y"
+            title="Fuze III - Vidéo populaire 1"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/6VoFkPgZr_Y"
+            title="Fuze III - Vidéo populaire 2"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/y-0Z13P5bt8"
+            title="Fuze III - Vidéo populaire 3"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </section>
 
-    // Création de la grille HTML
-    for (let r = 0; r < ROWS; r++) {
-      const row = grid.insertRow();
-      for (let c = 0; c < COLS; c++) {
-        const cell = row.insertCell();
-        cell.dataset.row = r;
-        cell.dataset.col = c;
-        cell.onclick = () => {
-          if (isMyTurn) makeMove(c);
-        };
-      }
-    }
+    <section id="serveur" aria-label="Serveur Minecraft">
+      <h2>Serveur Minecraft officiel</h2>
+      <div class="server-box">
+        <p>Le serveur Minecraft officiel de Fuze III : <strong>FuzeMC</strong></p>
+        <p>
+          Adresse IP : <code>play.fuzemc.fr</code>
+        </p>
+        <p>
+          Site officiel : <a href="https://fuzemc.fr" target="_blank" rel="noopener noreferrer">https://fuzemc.fr</a>
+        </p>
+        <p>
+          Rejoins la communauté et découvre un univers Minecraft unique !
+        </p>
+      </div>
+    </section>
+  </main>
 
-    // 🎲 Matchmaking
-    function findOrCreateGame() {
-      const queueRef = db.ref("queue");
-      queueRef.once("value", snap => {
-        const queue = snap.val() || {};
-        const waiting = Object.keys(queue).find(k => k !== playerId);
-
-        if (waiting) {
-          // Joindre une partie existante
-          gameId = "game_" + waiting;
-          db.ref("queue/" + waiting).remove();
-          startGame(gameId, "yellow");
-        } else {
-          // Attente d’un adversaire
-          db.ref("queue/" + playerId).set(true);
-          db.ref("queue/" + playerId).onDisconnect().remove();
-        }
-      });
-    }
-
-    function startGame(id, color) {
-      gameId = id;
-      playerColor = color;
-      isMyTurn = (color === "red");
-      status.textContent = `🎮 Partie trouvée. Tu es ${playerColor.toUpperCase()} !`;
-
-      const movesRef = db.ref("games/" + gameId + "/moves");
-      movesRef.on("child_added", snap => {
-        const move = snap.val();
-        placeDisc(move.col, move.color);
-        isMyTurn = (move.color !== playerColor);
-      });
-    }
-
-    function makeMove(col) {
-      if (!isMyTurn) return;
-      db.ref("games/" + gameId + "/moves").push({
-        col,
-        color: playerColor
-      });
-      isMyTurn = false;
-    }
-
-    function placeDisc(col, color) {
-      for (let r = ROWS - 1; r >= 0; r--) {
-        const cell = grid.rows[r].cells[col];
-        if (!cell.classList.contains("red") && !cell.classList.contains("yellow")) {
-          cell.classList.add(color);
-          break;
-        }
-      }
-    }
-
-    findOrCreateGame();
-  </script>
+  <footer>
+    &copy; 2025 Fan Site Fuze III - Créé par toi avec ChatGPT
+  </footer>
 </body>
 </html>
