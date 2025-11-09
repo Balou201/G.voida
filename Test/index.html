@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vérification anti-virus — Mockup</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#93c5fd33; --success:#10b981; --danger:#ef4444;
+      --glass: rgba(255,255,255,0.03);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#071025 0%, #07172a 60%);color:#e6eef8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .wrap{width:100%;max-width:980px}
+
+    .card{background:linear-gradient(180deg,var(--card), rgba(10,16,26,0.9));border-radius:12px;padding:22px;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
+
+    header{display:flex;align-items:center;gap:16px}
+    .logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:2px 0 0;color:#bcd7ee;opacity:0.9}
+
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px}
+    .panel{background:var(--glass);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+
+    /* Scanner panel */
+    .scanner{display:flex;flex-direction:column;gap:14px}
+    .controls{display:flex;gap:10px;align-items:center}
+    .btn{background:linear-gradient(180deg,var(--accent),#0ea5a3);border:none;padding:10px 14px;border-radius:8px;color:#042a2f;font-weight:600;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit}
+    .btn.warn{background:linear-gradient(180deg,#fb923c,#f97316);color:#1a0b00}
+
+    .progresswrap{background:rgba(255,255,255,0.03);height:14px;border-radius:999px;overflow:hidden}
+    .progress{height:14px;border-radius:999px;width:0%;background:linear-gradient(90deg,var(--accent),#7c3aed);transition:width 300ms linear}
+    .stats{display:flex;justify-content:space-between;font-size:13px;color:#b9d5ee}
+
+    .filelist{height:220px;overflow:auto;padding:8px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02)}
+    .file{display:flex;justify-content:space-between;padding:8px;border-radius:6px;margin-bottom:6px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));font-size:13px}
+    .file .name{max-width:70%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .file.detected{border-left:4px solid var(--danger);background:linear-gradient(90deg, rgba(239,68,68,0.06), transparent)}
+    .file.safe{border-left:4px solid var(--success)}
+
+    /* Right column */
+    .summary{display:flex;flex-direction:column;gap:12px}
+    .stat{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);font-weight:600}
+    .stat small{display:block;font-weight:400;color:#bcd7ee}
+
+    footer{margin-top:14px;display:flex;justify-content:space-between;align-items:center;color:#a9c6df;font-size:13px}
+
+    /* small screens */
+    @media (max-width:880px){.grid{grid-template-columns:1fr;}.summary{order:2}}
+
+    /* subtle scan shimmer */
+    .scanner .scanline{height:6px;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);border-radius:999px;opacity:0;transform:translateX(-100%)}
+    .scanning .scanline{animation:scan 2s linear infinite;opacity:1}
+    @keyframes scan{0%{transform:translateX(-110%)}50%{transform:translateX(20%)}100%{transform:translateX(110%)}}
+
+    /* tiny accessible focus */
+    button:focus{outline:3px solid rgba(6,182,212,0.18);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="title">
+      <header>
+        <div class="logo" aria-hidden="true">AV</div>
+        <div>
+          <h1 id="title">Vérification anti-virus</h1>
+          <p class="lead">Analyse de sécurité rapide — interface mockup (front-end seulement)</p>
+        </div>
+      </header>
+
+      <div class="grid">
+        <section class="panel scanner" aria-label="Scanner">
+          <div class="controls">
+            <button id="startBtn" class="btn">Démarrer l'analyse</button>
+            <button id="stopBtn" class="btn secondary" disabled>Arrêter</button>
+            <button id="rescanBtn" class="btn secondary" disabled>Ré-analyser</button>
+            <div style="margin-left:auto;color:#a9c6df;font-size:13px">Mode: <strong id="modeLabel">Rapide</strong></div>
+          </div>
+
+          <div class="progresswrap" aria-hidden="true">
+            <div id="progress" class="progress"></div>
+          </div>
+          <div class="scanline" aria-hidden="true"></div>
+
+          <div class="stats">
+            <span id="scannedCount">Fichiers scannés: 0</span>
+            <span id="threatCount">Menaces: 0</span>
+            <span id="elapsed">00:00</span>
+          </div>
+
+          <div class="filelist" id="fileList" tabindex="0" aria-live="polite">
+            <!-- fichiers détectés en JS -->
+          </div>
+
+          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
+            <button id="quarantineBtn" class="btn warn" disabled>Mettre en quarantaine</button>
+            <button id="exportBtn" class="btn secondary" disabled>Télécharger le rapport</button>
+          </div>
+        </section>
+
+        <aside class="panel summary" aria-label="Résumé de l'analyse">
+          <div class="stat">
+            <div>
+              <div style="font-size:13px">État</div>
+              <small id="statusText">Prêt</small>
+            </div>
+            <div id="statusIcon">✅</div>
+          </div>
+
+          <div class="stat">
+            <div>
+              <div style="font-size:13px">Durée estimée</div>
+              <small id="estimated">—</small>
+            </div>
+            <div>⏱️</div>
+          </div>
+
+          <div class="stat">
+            <div>
+              <div style="font-size:13px">Fichiers analysés</div>
+              <small id="totalFiles">0</small>
+            </div>
+            <div>📁</div>
+          </div>
+
+          <div class="stat">
+            <div>
+              <div style="font-size:13px">Menaces trouvées</div>
+              <small id="totalThreats">0</small>
+            </div>
+            <div>⚠️</div>
+          </div>
+
+          <div style="font-size:13px;color:#bcd7ee">Informations:
+            <small style="display:block;margin-top:8px;color:#9dc3e7;font-weight:400">Ceci est une maquette front-end. Aucune action réelle de suppression ou quarantaine n'est effectuée.</small>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        <div>Mockup • Prototype local</div>
+        <div>Version 1.0</div>
+      </footer>
+    </div>
+  </div>
+
+<script>
+// Mockup JavaScript: simulate a scan with fake file names and random detections.
+const filesSample = [
+  'C:/Users/max/Documents/rapport.docx', 'C:/Windows/System32/drivers/etc/hosts', 'C:/Program Files/GoodApp/app.exe',
+  'D:/Musique/song.mp3', 'D:/Photos/vacances/IMG_2022.jpg', 'C:/Users/max/Downloads/setup.msi',
+  'C:/Temp/cache.tmp', 'C:/Users/max/Desktop/todo.txt', 'E:/Movies/movie.mkv', 'C:/Users/max/.bashrc'
+];
+
+let state = {scanning:false, scanned:0, threats:0, startTime:null, timer:null, detected:[]};
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const rescanBtn = document.getElementById('rescanBtn');
+const progress = document.getElementById('progress');
+const fileList = document.getElementById('fileList');
+const scannedCount = document.getElementById('scannedCount');
+const threatCount = document.getElementById('threatCount');
+const elapsed = document.getElementById('elapsed');
+const statusText = document.getElementById('statusText');
+const statusIcon = document.getElementById('statusIcon');
+const totalFiles = document.getElementById('totalFiles');
+const totalThreats = document.getElementById('totalThreats');
+const quarantineBtn = document.getElementById('quarantineBtn');
+const exportBtn = document.getElementById('exportBtn');
+const scanline = document.querySelector('.scanline');
+
+function formatTime(s){
+  const mm = String(Math.floor(s/60)).padStart(2,'0');
+  const ss = String(s%60).padStart(2,'0');
+  return `${mm}:${ss}`;
+}
+
+function pickRandomFile(){
+  const name = filesSample[Math.floor(Math.random()*filesSample.length)];
+  // add some random long file names
+  const rnd = Math.random();
+  if(rnd>0.7) return name.replace(/(\.[a-z0-9]+)$/i, `_copy${Math.floor(Math.random()*90)}$1`);
+  return name;
+}
+
+function startScan(){
+  if(state.scanning) return;
+  state.scanning = true;
+  state.startTime = Date.now();
+  state.scanned = 0; state.threats = 0; state.detected = []; fileList.innerHTML='';
+  scannedCount.textContent = 'Fichiers scannés: 0';
+  threatCount.textContent = 'Menaces: 0';
+  totalFiles.textContent = '—'; totalThreats.textContent='0';
+  statusText.textContent = 'Analyse en cours'; statusIcon.textContent = '🔍';
+  startBtn.disabled=true; stopBtn.disabled=false; rescanBtn.disabled=true; quarantineBtn.disabled=true; exportBtn.disabled=true;
+  document.querySelector('.scanner').classList.add('scanning');
+
+  // simulate scanning speed and total
+  const total = 25 + Math.floor(Math.random()*40);
+  totalFiles.textContent = total;
+  const interval = 400 + Math.floor(Math.random()*300);
+  let elapsedSec = 0;
+  state.timer = setInterval(()=>{
+    if(!state.scanning) return;
+    // simulate progress
+    state.scanned += 1;
+    scannedCount.textContent = 'Fichiers scannés: ' + state.scanned;
+    totalThreats.textContent = state.threats;
+
+    // progress bar
+    progress.style.width = Math.round((state.scanned/total)*100) + '%';
+
+    // random detection
+    const detectedNow = Math.random() < 0.08; // 8% chance
+    const filename = pickRandomFile();
+    const el = document.createElement('div'); el.className='file';
+    const nameSpan = document.createElement('div'); nameSpan.className='name'; nameSpan.textContent = filename;
+    const statusSpan = document.createElement('div');
+    if(detectedNow){
+      el.classList.add('detected'); state.threats += 1; state.detected.push({file:filename, type: 'Suspicious'});
+      statusSpan.textContent = '⚠️ Détecté';
+      threatCount.textContent = 'Menaces: ' + state.threats;
+      totalThreats.textContent = state.threats;
+    } else {
+      el.classList.add('safe'); statusSpan.textContent = '✅ OK';
+    }
+    el.appendChild(nameSpan); el.appendChild(statusSpan);
+    fileList.prepend(el);
+
+    // update elapsed
+    elapsedSec += Math.round(interval/1000);
+    elapsed.textContent = formatTime(elapsedSec);
+
+    // finish condition
+    if(state.scanned >= total){
+      finishScan();
+    }
+  }, interval);
+}
+
+function finishScan(){
+  clearInterval(state.timer); state.scanning=false; startBtn.disabled=false; stopBtn.disabled=true; rescanBtn.disabled=false; quarantineBtn.disabled = state.detected.length===0; exportBtn.disabled=false;
+  statusText.textContent = state.detected.length ? 'Menaces trouvées' : 'Aucun problème détecté';
+  statusIcon.textContent = state.detected.length ? '⚠️' : '✅';
+  document.querySelector('.scanner').classList.remove('scanning');
+  progress.style.width = '100%';
+}
+
+function stopScan(){
+  if(!state.scanning) return;
+  state.scanning=false; clearInterval(state.timer); startBtn.disabled=false; stopBtn.disabled=true; rescanBtn.disabled=false; quarantineBtn.disabled = state.detected.length===0; exportBtn.disabled=false;
+  statusText.textContent = 'Analyse arrêtée'; statusIcon.textContent='⏸️';
+  document.querySelector('.scanner').classList.remove('scanning');
+}
+
+function exportReport(){
+  const report = {
+    generatedAt: new Date().toISOString(),
+    scanned: state.scanned,
+    threats: state.threats,
+    detected: state.detected
+  };
+  const blob = new Blob([JSON.stringify(report, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download = 'rapport_scan.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+
+function quarantineDetected(){
+  if(state.detected.length===0) return alert('Aucune menace à mettre en quarantaine.');
+  // mock action
+  for(const d of state.detected){
+    const node = document.createElement('div'); node.className='file'; node.innerHTML = `<div class="name">${d.file}</div><div>📦 En quarantaine</div>`; fileList.prepend(node);
+  }
+  alert(`${state.detected.length} élément(s) marqués comme mis en quarantaine (simulation).`);
+  state.detected = [];
+  quarantineBtn.disabled = true; totalThreats.textContent='0'; threatCount.textContent='Menaces: 0';
+}
+
+startBtn.addEventListener('click', startScan);
+stopBtn.addEventListener('click', stopScan);
+rescanBtn.addEventListener('click', ()=>{ progress.style.width='0%'; elapsed.textContent='00:00'; startScan(); });
+exportBtn.addEventListener('click', exportReport);
+quarantineBtn.addEventListener('click', quarantineDetected);
+
+// keyboard shortcuts: S start / Q quarantine / E export
+window.addEventListener('keydown', (e)=>{
+  if(e.key.toLowerCase()==='s') startBtn.click();
+  if(e.key.toLowerCase()==='q') quarantineBtn.click();
+  if(e.key.toLowerCase()==='e') exportBtn.click();
+});
+
+// Initially populate some recent files
+(function seed(){
+  for(let i=0;i<5;i++){
+    const el = document.createElement('div'); el.className='file safe'; el.innerHTML = `<div class="name">${pickRandomFile()}</div><div>✅ OK</div>`; fileList.appendChild(el);
+  }
+})();
+</script>
+</body>
+</html>
